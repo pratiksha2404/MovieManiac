@@ -17,7 +17,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity(), OnResponseListener
+class MainActivity : AppCompatActivity()
 {
     val TAG = "MainActivity"
     private val api_key = "751260fc614a6e20c18c6870ad9c6ca8"
@@ -32,17 +32,7 @@ class MainActivity : AppCompatActivity(), OnResponseListener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        movieViewModel.getUpcomingMovies( api_key, 1, "en-US",this )
-    }
-
-    override fun onSuccess(response: UpcomingMoviesResponse?)
-    {
-        Log.d(TAG, "onSuccess: response = $response")
-    }
-
-    override fun onFailure(errorCode: Int)
-    {
-        Log.d(TAG, "onFailure: $errorCode")
+        movieViewModel.getUpcomingMovies( api_key, 1, "en-US" )
     }
 
     class MovieViewModelFactory( private val upcomingMoviesUseCase: UpcomingMoviesUseCase ) : ViewModelProvider.Factory

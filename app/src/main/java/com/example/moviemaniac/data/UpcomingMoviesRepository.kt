@@ -18,30 +18,32 @@ class UpcomingMoviesRepository
 
     private val movieServiceAPI = retrofit.create(MovieServiceAPI::class.java)
 
-    fun getUpcomingMovies( api_key: String, page: Int, lang: String, onResponseListener: OnResponseListener)
+    suspend fun getUpcomingMovies( api_key: String, page: Int, lang: String) : UpcomingMoviesResponse
     {
 
-        val call = movieServiceAPI.getUpcomingMovies( api_key, page, lang )
+        val response = movieServiceAPI.getUpcomingMovies( api_key, page, lang )
+        Log.d( "MovieRepo", "getUpcomingMovies: response = " + response )
 
-        call.enqueue(object : Callback<UpcomingMoviesResponse>
-                     {
-                         override fun onResponse(
-                             call: Call<UpcomingMoviesResponse>,
-                             response: Response<UpcomingMoviesResponse>
-                         )
-                         {
-                             Log.d("MovieRepo", "onResponse: = " + response.body() )
-                             onResponseListener.onSuccess( response.body() )
-                         }
-
-                         override fun onFailure(
-                             call: Call<UpcomingMoviesResponse>,
-                             t: Throwable
-                         )
-                         {
-                             onResponseListener.onFailure( 400)
-                         }
-
-                     })
+        return response
+//        call.enqueue(object : Callback<UpcomingMoviesResponse>
+//                     {
+//                         override fun onResponse(
+//                             call: Call<UpcomingMoviesResponse>,
+//                             response: Response<UpcomingMoviesResponse>
+//                         )
+//                         {
+//                             Log.d("MovieRepo", "onResponse: = " + response.body() )
+//                             onResponseListener.onSuccess( response.body() )
+//                         }
+//
+//                         override fun onFailure(
+//                             call: Call<UpcomingMoviesResponse>,
+//                             t: Throwable
+//                         )
+//                         {
+//                             onResponseListener.onFailure( 400)
+//                         }
+//
+//                     })
     }
 }
