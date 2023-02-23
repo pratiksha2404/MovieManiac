@@ -1,16 +1,21 @@
 package com.example.moviemaniac.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.moviemaniac.R
+import com.example.moviemaniac.data.UpcomingMovies
+import com.example.moviemaniac.data.UpcomingMoviesRepository
+import com.example.moviemaniac.domain.UpcomingMoviesUseCase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -19,18 +24,14 @@ private const val ARG_PARAM2 = "param2"
  */
 class HomePage : Fragment()
 {
+    val TAG = "MainActivity"
+    private val api_key = "751260fc614a6e20c18c6870ad9c6ca8"
+    private val upcomingMoviesRepository: UpcomingMoviesRepository = UpcomingMoviesRepository()
+    private val upcomingMoviesUseCase: UpcomingMoviesUseCase = UpcomingMoviesUseCase(upcomingMoviesRepository)
+    private lateinit var recyclerView: RecyclerView
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val movieViewModel: MoviesViewModel by viewModels {
+        MovieViewModelFactory(upcomingMoviesUseCase)
     }
 
     override fun onCreateView(
@@ -42,25 +43,27 @@ class HomePage : Fragment()
         return inflater.inflate(R.layout.fragment_home_page, container, false)
     }
 
-    companion object
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
+        super.onViewCreated(view, savedInstanceState)
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomePage.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomePage().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        recyclerView = view.findViewById(R.id.recycler_view)
+        movieViewModel.getUpcomingMovies( api_key, 1, "en-US" )
+        movieViewModel.upcomingMoviesLiveData.observe( viewLifecycleOwner ){
+            Log.d(TAG, "observe: upcomingMoviesLiveData = ${movieViewModel.upcomingMoviesLiveData}")
+            recyclerView.adapter = GridRecyclerViewAdapter(it)
+        }
+
+        val manager = GridLayoutManager(view.context, 3)
+        recyclerView.layoutManager = manager
+    }
+
+    class MovieViewModelFactory( private val upcomingMoviesUseCase: UpcomingMoviesUseCase ) : ViewModelProvider.Factory
+    {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T
+        {
+            return MoviesViewModel(upcomingMoviesUseCase) as T
+        }
     }
 }
