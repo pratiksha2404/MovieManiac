@@ -29,6 +29,7 @@ class HomePage : Fragment()
     private val upcomingMoviesRepository: UpcomingMoviesRepository = UpcomingMoviesRepository()
     private val upcomingMoviesUseCase: UpcomingMoviesUseCase = UpcomingMoviesUseCase(upcomingMoviesRepository)
     private lateinit var recyclerView: RecyclerView
+    private var adapter: GridRecyclerViewListAdapter = GridRecyclerViewListAdapter()
 
     private val movieViewModel: MoviesViewModel by viewModels {
         MovieViewModelFactory(upcomingMoviesUseCase)
@@ -50,11 +51,12 @@ class HomePage : Fragment()
         recyclerView = view.findViewById(R.id.recycler_view)
         movieViewModel.getUpcomingMovies( api_key, 1, "en-US" )
         movieViewModel.upcomingMoviesLiveData.observe( viewLifecycleOwner ){
-            Log.d(TAG, "observe: upcomingMoviesLiveData = ${movieViewModel.upcomingMoviesLiveData}")
-            recyclerView.adapter = GridRecyclerViewAdapter(it)
+            Log.d(TAG, "observe: upcomingMoviesLiveData ")
+            adapter.submitList(it)
         }
 
         val manager = GridLayoutManager(view.context, 3)
+        recyclerView.adapter = adapter
         recyclerView.layoutManager = manager
     }
 
