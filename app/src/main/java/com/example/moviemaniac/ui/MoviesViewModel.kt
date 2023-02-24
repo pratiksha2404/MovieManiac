@@ -13,8 +13,10 @@ class MoviesViewModel( private val upcomingMoviesUseCase: UpcomingMoviesUseCase 
 {
     private val upcomingMoviesMutable: MutableLiveData<List<UpcomingMovies>> = MutableLiveData()
     val upcomingMoviesLiveData: LiveData< List<UpcomingMovies>> = upcomingMoviesMutable
+    private val TAG = "MoviesViewModel"
     fun getUpcomingMovies( api_key: String, page: Int, lang: String )
     {
+        Log.d(TAG, "getUpcomingMovies() called with: api_key = $api_key, page = $page, lang = $lang")
         viewModelScope.launch {
             val response = upcomingMoviesUseCase.execute( api_key, page, lang )
             Log.d("MovieViewModel", "getUpcomingMovies: Response = $response" )

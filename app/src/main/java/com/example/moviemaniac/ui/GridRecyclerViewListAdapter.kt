@@ -14,7 +14,7 @@ import com.example.moviemaniac.data.UpcomingMovies
 
 class GridRecyclerViewListAdapter : ListAdapter<UpcomingMovies, GridRecyclerViewListAdapter.MyViewHolder>(DiffCallback())
 {
-    val TAG = "GridRecyclerViewListAdapter"
+    private val TAG = "GridRecyclerViewListAdapter"
     class MyViewHolder(itemView: View) : ViewHolder(itemView)
     {
         val imageView = itemView.findViewById<ImageView>(R.id.imageView)
@@ -36,12 +36,11 @@ class GridRecyclerViewListAdapter : ListAdapter<UpcomingMovies, GridRecyclerView
         Glide.with(holder.itemView).load(albumArtUrl).into(holder.imageView)
     }
 
-
     class DiffCallback : DiffUtil.ItemCallback<UpcomingMovies>(){
 
         override fun areItemsTheSame(oldItem: UpcomingMovies, newItem: UpcomingMovies): Boolean
         {
-            return oldItem.id != newItem.id
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: UpcomingMovies, newItem: UpcomingMovies): Boolean
@@ -49,4 +48,21 @@ class GridRecyclerViewListAdapter : ListAdapter<UpcomingMovies, GridRecyclerView
             return oldItem == newItem
         }
     }
+
+    override fun submitList(list: MutableList<UpcomingMovies>?)
+    {
+        val upComingMoviesList = mutableListOf<UpcomingMovies>()
+
+        if( currentList.size !=0)
+        {
+            upComingMoviesList.addAll(currentList)
+        }
+        if (list != null)
+        {
+            upComingMoviesList.addAll(currentList.size, list)
+        }
+        Log.d(TAG, "submitList: list size = $list")
+        super.submitList(upComingMoviesList)
+    }
+
 }
