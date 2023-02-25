@@ -12,8 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
-import com.example.moviemaniac.data.UpcomingMoviesRepository
+import com.example.moviemaniac.data.MoviesDataRepository
 import com.example.moviemaniac.databinding.FragmentHomePageBinding
+import com.example.moviemaniac.domain.MoviesDetailsUseCase
 import com.example.moviemaniac.domain.UpcomingMoviesUseCase
 
 
@@ -21,17 +22,19 @@ class HomePage : Fragment()
 {
     private val TAG = "MainActivity"
     private val apiKey = "751260fc614a6e20c18c6870ad9c6ca8"
-    private val upcomingMoviesRepository: UpcomingMoviesRepository = UpcomingMoviesRepository()
-    private val upcomingMoviesUseCase: UpcomingMoviesUseCase = UpcomingMoviesUseCase(upcomingMoviesRepository)
+    private val moviesDataRepository: MoviesDataRepository = MoviesDataRepository()
+    private val upcomingMoviesUseCase: UpcomingMoviesUseCase = UpcomingMoviesUseCase(moviesDataRepository)
     private var adapter: GridRecyclerViewListAdapter = GridRecyclerViewListAdapter()
     private lateinit var manager:GridLayoutManager
+
+    private val moviesUseCase = MoviesDetailsUseCase(moviesDataRepository)
 
     private var isLoading = true
     private var pageNumber = 0
     private lateinit var binding: FragmentHomePageBinding
 
     private val movieViewModel: MoviesViewModel by viewModels {
-        MovieViewModelFactory(upcomingMoviesUseCase)
+        MovieViewModelFactory(upcomingMoviesUseCase, moviesUseCase )
     }
 
     override fun onCreateView(
@@ -94,12 +97,13 @@ class HomePage : Fragment()
         initScrollListener()
     }
 
-    class MovieViewModelFactory( private val upcomingMoviesUseCase: UpcomingMoviesUseCase ) : ViewModelProvider.Factory
+    class MovieViewModelFactory( private val upcomingMoviesUseCase: UpcomingMoviesUseCase,
+                                 private val moviesUseCase: MoviesDetailsUseCase ) : ViewModelProvider.Factory
     {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T
         {
-            return MoviesViewModel(upcomingMoviesUseCase) as T
+            return MoviesViewModel(upcomingMoviesUseCase, moviesUseCase ) as T
         }
     }
 }

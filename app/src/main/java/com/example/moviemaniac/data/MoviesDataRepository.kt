@@ -2,14 +2,10 @@ package com.example.moviemaniac.data
 
 import android.util.Log
 import com.example.moviemaniac.ui.MovieServiceAPI
-import com.example.moviemaniac.ui.OnResponseListener
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class UpcomingMoviesRepository
+class MoviesDataRepository
 {
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://api.themoviedb.org/")
@@ -45,5 +41,12 @@ class UpcomingMoviesRepository
 //                         }
 //
 //                     })
+    }
+
+    suspend fun getMoviesDetails(apiKey: String, id: Int, lang: String): MovieData
+    {
+        var response = movieServiceAPI.getMovieDetails( id, apiKey, lang )
+        Log.d("MoviesRepo", "getMoviesDetails: response = $response" )
+        return response
     }
 }
