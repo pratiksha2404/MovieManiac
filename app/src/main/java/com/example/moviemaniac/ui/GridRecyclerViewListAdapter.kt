@@ -2,22 +2,21 @@ package com.example.moviemaniac.ui
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.example.moviemaniac.R
 import com.example.moviemaniac.data.UpcomingMovies
+import com.example.moviemaniac.databinding.GridItemLayoutBinding
 
 class GridRecyclerViewListAdapter : ListAdapter<UpcomingMovies, GridRecyclerViewListAdapter.MyViewHolder>(DiffCallback())
 {
     private val TAG = "GridRecyclerViewListAdapter"
-    class MyViewHolder(itemView: View) : ViewHolder(itemView)
+    private lateinit var binding: GridItemLayoutBinding
+    class MyViewHolder(itemView: GridItemLayoutBinding) : ViewHolder(itemView.root)
     {
-        val imageView = itemView.findViewById<ImageView>(R.id.imageView)
+        val imageView = itemView.imageView
     }
 
     override fun onCreateViewHolder(
@@ -25,8 +24,10 @@ class GridRecyclerViewListAdapter : ListAdapter<UpcomingMovies, GridRecyclerView
         viewType: Int
     ): MyViewHolder
     {
-        val itemView = LayoutInflater.from( parent.context ).inflate( R.layout.grid_item_layout, parent, false)
-        return MyViewHolder(itemView)
+        val inflater = LayoutInflater.from( parent.context )
+        binding = GridItemLayoutBinding.inflate(inflater, parent, false)
+
+        return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int)

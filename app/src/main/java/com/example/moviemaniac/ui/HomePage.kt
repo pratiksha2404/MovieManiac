@@ -12,28 +12,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
-import com.example.moviemaniac.R
 import com.example.moviemaniac.data.UpcomingMoviesRepository
+import com.example.moviemaniac.databinding.FragmentHomePageBinding
 import com.example.moviemaniac.domain.UpcomingMoviesUseCase
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomePage.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomePage : Fragment()
 {
     private val TAG = "MainActivity"
     private val apiKey = "751260fc614a6e20c18c6870ad9c6ca8"
     private val upcomingMoviesRepository: UpcomingMoviesRepository = UpcomingMoviesRepository()
     private val upcomingMoviesUseCase: UpcomingMoviesUseCase = UpcomingMoviesUseCase(upcomingMoviesRepository)
-    private lateinit var recyclerView: RecyclerView
     private var adapter: GridRecyclerViewListAdapter = GridRecyclerViewListAdapter()
     private lateinit var manager:GridLayoutManager
 
     private var isLoading = true
     private var pageNumber = 0
+    private lateinit var binding: FragmentHomePageBinding
 
     private val movieViewModel: MoviesViewModel by viewModels {
         MovieViewModelFactory(upcomingMoviesUseCase)
@@ -42,15 +37,15 @@ class HomePage : Fragment()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?
+    ): View
     {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_page, container, false)
+        binding = FragmentHomePageBinding.inflate(layoutInflater, container,false)
+        return binding.root
     }
 
     private fun initScrollListener()
     {
-        recyclerView.addOnScrollListener(object: OnScrollListener(){
+        binding.recyclerView.addOnScrollListener(object: OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int)
             {
                 super.onScrolled(recyclerView, dx, dy)
@@ -86,8 +81,6 @@ class HomePage : Fragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById(R.id.recycler_view)
-
         loadMoreData()
         movieViewModel.upcomingMoviesLiveData.observe( viewLifecycleOwner ){
             Log.d(TAG, "observe: upcomingMoviesLiveData ")
@@ -95,8 +88,8 @@ class HomePage : Fragment()
         }
 
         manager = GridLayoutManager(view.context, 4)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = manager
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = manager
 
         initScrollListener()
     }
