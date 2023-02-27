@@ -4,4 +4,5 @@ data class MovieData( val id: Int, val name: String, val backdrop_path: String,
                       val popularity: Double, val poster_path: String, val overview: String,
                       val status: String, val productionCompanies: ArrayList<ProductionCompanies>,
                       val video: Boolean, val productionCountries: ArrayList<ProductionCountries>,
-                      val genres: ArrayList<Genres>, )
+                      val genres: ArrayList<Genres>, val title: String, val vote_average: Double,
+                      val release_date: String)

@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.moviemaniac.data.UpcomingMovies
 import com.example.moviemaniac.databinding.GridItemLayoutBinding
 
-class GridRecyclerViewListAdapter : ListAdapter<UpcomingMovies, GridRecyclerViewListAdapter.MyViewHolder>(DiffCallback())
+class GridRecyclerViewListAdapter( private val onItemClickListener: OnItemClickListener ) : ListAdapter<UpcomingMovies, GridRecyclerViewListAdapter.MyViewHolder>(DiffCallback())
 {
     private val TAG = "GridRecyclerViewListAdapter"
     private lateinit var binding: GridItemLayoutBinding
@@ -35,6 +35,15 @@ class GridRecyclerViewListAdapter : ListAdapter<UpcomingMovies, GridRecyclerView
         val albumArtUrl = "https://image.tmdb.org/t/p/w500" + currentList[position].poster_path
         Log.d(TAG, "onBindViewHolder: $position = $albumArtUrl")
         Glide.with(holder.itemView).load(albumArtUrl).into(holder.imageView)
+        binding.imageView.setOnClickListener{
+            Log.d(TAG, "onCreateViewHolder: setOnClickListener..!!")
+            Log.d(TAG, "onItemClick: albumart = $albumArtUrl")
+            Log.d(TAG, "onItemClick: position = $position")
+            val id = currentList[position].id
+            Log.d(TAG, "onItemClick: id = $id")
+
+            onItemClickListener.onItemClick( id )
+        }
     }
 
     class DiffCallback : DiffUtil.ItemCallback<UpcomingMovies>(){
