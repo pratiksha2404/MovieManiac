@@ -11,30 +11,22 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.moviemaniac.R
-import com.example.moviemaniac.data.MoviesDataRepository
 import com.example.moviemaniac.databinding.FragmentHomePageBinding
-import com.example.moviemaniac.domain.MoviesDetailsUseCase
-import com.example.moviemaniac.domain.UpcomingMoviesUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomePage : Fragment(), OnItemClickListener
 {
     private val TAG = "MainActivity"
     private val apiKey = "751260fc614a6e20c18c6870ad9c6ca8"
-    private val moviesDataRepository: MoviesDataRepository = MoviesDataRepository()
-    private val upcomingMoviesUseCase: UpcomingMoviesUseCase = UpcomingMoviesUseCase(moviesDataRepository)
     private var adapter: GridRecyclerViewListAdapter = GridRecyclerViewListAdapter( this )
     private lateinit var manager:GridLayoutManager
-
-    private val moviesUseCase = MoviesDetailsUseCase(moviesDataRepository)
 
     private var isLoading = true
     private var pageNumber = 0
     private lateinit var binding: FragmentHomePageBinding
 
-    private val movieViewModel: MoviesViewModel by activityViewModels {
-        MovieViewModelFactory(upcomingMoviesUseCase, moviesUseCase )
-    }
+    private val movieViewModel: MoviesViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

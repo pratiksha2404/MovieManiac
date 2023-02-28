@@ -2,18 +2,10 @@ package com.example.moviemaniac.data
 
 import android.util.Log
 import com.example.moviemaniac.ui.MovieServiceAPI
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class MoviesDataRepository
+class MoviesDataRepository @Inject constructor( private val movieServiceAPI: MovieServiceAPI )
 {
-    private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://api.themoviedb.org/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    private val movieServiceAPI = retrofit.create(MovieServiceAPI::class.java)
-
     suspend fun getUpcomingMovies( api_key: String, page: Int, lang: String) : UpcomingMoviesResponse
     {
 
@@ -45,7 +37,7 @@ class MoviesDataRepository
 
     suspend fun getMoviesDetails(apiKey: String, id: Int, lang: String): MovieData
     {
-        var response = movieServiceAPI.getMovieDetails( id, apiKey, lang )
+        val response = movieServiceAPI.getMovieDetails( id, apiKey, lang )
         Log.d("MoviesRepo", "getMoviesDetails: response = $response" )
         return response
     }

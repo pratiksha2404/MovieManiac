@@ -9,10 +9,15 @@ import com.example.moviemaniac.data.MovieData
 import com.example.moviemaniac.data.UpcomingMovies
 import com.example.moviemaniac.domain.MoviesDetailsUseCase
 import com.example.moviemaniac.domain.UpcomingMoviesUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MoviesViewModel( private val upcomingMoviesUseCase: UpcomingMoviesUseCase,
-                       private val moviesDetailsUseCase: MoviesDetailsUseCase ): ViewModel()
+@HiltViewModel
+class MoviesViewModel @Inject constructor(
+    private val upcomingMoviesUseCase: UpcomingMoviesUseCase,
+    private val moviesDetailsUseCase: MoviesDetailsUseCase
+) : ViewModel()
 {
     private val upcomingMoviesMutable: MutableLiveData<List<UpcomingMovies>> = MutableLiveData()
     val upcomingMoviesLiveData: LiveData< List<UpcomingMovies>> = upcomingMoviesMutable

@@ -3,7 +3,9 @@ package com.example.moviemaniac.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.moviemaniac.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity()
 {
     private lateinit var binding: ActivityMainBinding

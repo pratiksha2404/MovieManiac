@@ -8,33 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
-import com.example.moviemaniac.data.Genres
 import com.example.moviemaniac.data.MovieData
-import com.example.moviemaniac.data.MoviesDataRepository
 import com.example.moviemaniac.databinding.FragmentMoviesDetailsBinding
-import com.example.moviemaniac.domain.MoviesDetailsUseCase
-import com.example.moviemaniac.domain.UpcomingMoviesUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass.
  * Use the [MoviesDetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class MoviesDetailsFragment : Fragment()
 {
     private lateinit var binding: FragmentMoviesDetailsBinding
     private var id: Int? = null
     private var TAG = "MoviesDetailsFragment"
     private val apiKey = "751260fc614a6e20c18c6870ad9c6ca8"
-    private var moviesDataRepository = MoviesDataRepository()
-    private var upcomingMoviesUseCase = UpcomingMoviesUseCase(moviesDataRepository)
-    private var moviesDetailsUseCase = MoviesDetailsUseCase(moviesDataRepository)
     private lateinit var movieData: MovieData
 
-    private val moviesViewModel: MoviesViewModel by activityViewModels {
-        MovieViewModelFactory( upcomingMoviesUseCase, moviesDetailsUseCase )
-    }
-
+    private val moviesViewModel: MoviesViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
