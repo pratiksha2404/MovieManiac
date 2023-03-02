@@ -78,7 +78,9 @@ class HomePage : Fragment(), OnItemClickListener
         loadMoreData()
         movieViewModel.upcomingMoviesLiveData.observe( viewLifecycleOwner ){
             Log.d(TAG, "observe: upcomingMoviesLiveData ")
-            adapter.submitList(it.toMutableList())
+            it?.let {
+                adapter.submitList(it.toMutableList())
+            }
         }
 
         manager = GridLayoutManager(view.context, 4)

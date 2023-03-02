@@ -30,7 +30,7 @@ class MoviesViewModel @Inject constructor(
         viewModelScope.launch {
             val response = upcomingMoviesUseCase.execute( api_key, page, lang )
             Log.d("MovieViewModel", "getUpcomingMovies: Response = $response" )
-            upcomingMoviesMutable.postValue( response.results )
+            upcomingMoviesMutable.postValue( response?.results )
 
         }
     }

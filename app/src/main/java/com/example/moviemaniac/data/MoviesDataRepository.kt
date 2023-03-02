@@ -2,17 +2,25 @@ package com.example.moviemaniac.data
 
 import android.util.Log
 import com.example.moviemaniac.ui.MovieServiceAPI
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MoviesDataRepository @Inject constructor( private val movieServiceAPI: MovieServiceAPI )
 {
-    suspend fun getUpcomingMovies( api_key: String, page: Int, lang: String) : UpcomingMoviesResponse
+    suspend fun getUpcomingMovies( api_key: String, page: Int, lang: String) : UpcomingMoviesResponse? = withContext(Dispatchers.IO)
     {
+        try
+        {
+            return@withContext movieServiceAPI.getUpcomingMovies(api_key, page, lang)
+        }
+        catch (e: Exception)
+        {
+            e.printStackTrace()
+            return@withContext null
+        }
 
-        val response = movieServiceAPI.getUpcomingMovies( api_key, page, lang )
-        Log.d( "MovieRepo", "getUpcomingMovies: response = " + response )
 
-        return response
 //        call.enqueue(object : Callback<UpcomingMoviesResponse>
 //                     {
 //                         override fun onResponse(
