@@ -2,5 +2,5 @@ package com.example.moviemaniac.ui
 
 interface OnItemClickListener
 {
-    fun onItemClick( position: Int )
+    fun onItemClick( id: Int )
 }

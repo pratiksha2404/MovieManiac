@@ -16,11 +16,6 @@ class MainActivity : AppCompatActivity()
         binding = ActivityMainBinding.inflate( layoutInflater )
         setContentView(binding.root)
 
-        if(savedInstanceState==null)
-        {
-            val homePage = HomePage()
-            supportFragmentManager.beginTransaction().add(binding.fragmentContainer.id, homePage,).commit()
-        }
     }
 
 }

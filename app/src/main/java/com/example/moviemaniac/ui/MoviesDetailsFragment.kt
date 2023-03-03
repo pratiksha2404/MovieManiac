@@ -7,16 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.moviemaniac.data.MovieData
 import com.example.moviemaniac.databinding.FragmentMoviesDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MoviesDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 @AndroidEntryPoint
 class MoviesDetailsFragment : Fragment()
 {
@@ -31,10 +28,11 @@ class MoviesDetailsFragment : Fragment()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?
+    ): View
     {
         binding = FragmentMoviesDetailsBinding.inflate(inflater,container,false)
-        id = arguments?.getInt("id")
+        val args: MoviesDetailsFragmentArgs by navArgs()
+        id = args.id
         Log.d(TAG, "onCreateView: id = $id" )
         return binding.root
     }

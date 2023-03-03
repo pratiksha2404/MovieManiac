@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
-import com.example.moviemaniac.R
 import com.example.moviemaniac.databinding.FragmentHomePageBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -92,11 +92,7 @@ class HomePage : Fragment(), OnItemClickListener
     override fun onItemClick(id: Int )
     {
         Log.d(TAG, "onItemClick: id = $id" )
-        val bundle = Bundle()
-        bundle.putInt("id", id )
-        val fragment = MoviesDetailsFragment()
-        fragment.arguments = bundle
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.fragment_container, fragment)?.addToBackStack("MoviesDetails")?.commit()
+        val action = HomePageDirections.actionHomePageToMoviesDetailsFragment(id)
+        findNavController().navigate(action)
     }
 }
