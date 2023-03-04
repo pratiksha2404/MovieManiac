@@ -1,6 +1,7 @@
 package com.example.moviemaniac.di
 
 import com.example.moviemaniac.ui.MovieServiceAPI
+import com.example.moviemaniac.ui.TVShowsServiceAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,5 +40,10 @@ object NetworkModule
         val httpBuilder = OkHttpClient.Builder()
         httpBuilder.addInterceptor(interceptor)
         return httpBuilder.build()
+    }
+
+    @Provides
+    fun provideTVShowsService( retrofit: Retrofit):TVShowsServiceAPI{
+        return retrofit.create(TVShowsServiceAPI::class.java)
     }
 }

@@ -23,4 +23,9 @@
             android:name="id"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/TVShowsFragment"
+        android:name="com.example.moviemaniac.ui.TVShowsFragment"
+        android:label="fragment_popular_tv_shows"
+        tools:layout="@layout/fragment_popular_tv_shows" />
 </navigation>

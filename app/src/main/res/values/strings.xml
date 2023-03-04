@@ -6,4 +6,7 @@
     <string name="Genres">Genres : </string>
     <string name="Period">Period : </string>
     <string name="Release_date">Release Date : </string>
+    <string name="Movies">Movies</string>
+    <string name="TV_shows">TV Shows</string>
+    <string name="Popular_tv_shows">Popular TV Shows</string>
 </resources>
