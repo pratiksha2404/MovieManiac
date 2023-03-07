@@ -24,7 +24,10 @@ class TVShowsViewModel @Inject constructor( private val tvShowsUseCase: PopularT
             val response = tvShowsUseCase.execute("751260fc614a6e20c18c6870ad9c6ca8", "en-US", 1)
             Log.d(TAG, "response: $response")
 
-            _popularTVShowsData.postValue(response.results)
+            if (response != null)
+            {
+                _popularTVShowsData.postValue(response.results)
+            }
         }
     }
 }

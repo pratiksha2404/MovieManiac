@@ -9,4 +9,12 @@
     <string name="Movies">Movies</string>
     <string name="TV_shows">TV Shows</string>
     <string name="Popular_tv_shows">Popular TV Shows</string>
+    <string name="Login">Login</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Register">Register</string>
+    <string name="Click_to_login">Click to login</string>
+    <string name="Click_to_register">Click to register</string>
+    <string name="LogOut">Logout</string>
+    <string name="Settings">Settings</string>
 </resources>

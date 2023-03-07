@@ -2,16 +2,16 @@ package com.example.moviemaniac.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
+import com.example.moviemaniac.R
 import com.example.moviemaniac.databinding.FragmentHomePageBinding
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -88,11 +88,29 @@ class HomePage : Fragment(), OnItemClickListener
         binding.recyclerView.layoutManager = manager
 
         initScrollListener()
+        setHasOptionsMenu(true)
     }
     override fun onItemClick(id: Int )
     {
         Log.d(TAG, "onItemClick: id = $id" )
-        val action = HomePageDirections.actionHomePageToMoviesDetailsFragment(id)
+        val action = HomePageDirections.actionHomePageToMoviesDetailsFragment3(id)
         findNavController().navigate(action)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
+    {
+        inflater.inflate(R.menu.home_option_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean
+    {
+        if( item.itemId == R.id.logout )
+        {
+            FirebaseAuth.getInstance().signOut()
+            val action = HomePageDirections.actionHomePageToLoginFragment()
+            findNavController().navigate(action)
+            Log.d(TAG, "onOptionsItemSelected: logout ${item.itemId}")
+        }
+        return true
     }
 }

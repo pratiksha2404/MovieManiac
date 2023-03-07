@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "619449452427",
+    "project_id": "moviemaniac-395c7",
+    "storage_bucket": "moviemaniac-395c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619449452427:android:ebf97a41b635794bc1518e",
+        "android_client_info": {
+          "package_name": "com.example.moviemaniac"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "619449452427-5t72j3cgc0ilgcjeum8ihca1qsaugljr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtGQxpSn5lh62fF01V1w1U4J6QZhi5fcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "619449452427-5t72j3cgc0ilgcjeum8ihca1qsaugljr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
