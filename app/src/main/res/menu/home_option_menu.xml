@@ -7,8 +7,8 @@
         android:title="">
         <menu>
             <item
-                android:title="@string/LogOut"
-                android:id="@+id/logout"
+                android:title="@string/Settings"
+                android:id="@+id/settings"
                 app:showAsAction="never"/>
         </menu>
     </item>

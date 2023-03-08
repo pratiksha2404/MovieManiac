@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.example.moviemaniac.R
 import com.example.moviemaniac.databinding.FragmentHomePageBinding
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -104,10 +103,9 @@ class HomePage : Fragment(), OnItemClickListener
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
-        if( item.itemId == R.id.logout )
+        if( item.itemId == R.id.settings )
         {
-            FirebaseAuth.getInstance().signOut()
-            val action = HomePageDirections.actionHomePageToLoginFragment()
+            val action = HomePageDirections.actionHomePageToSettingsFragment()
             findNavController().navigate(action)
             Log.d(TAG, "onOptionsItemSelected: logout ${item.itemId}")
         }

@@ -1,0 +1,15 @@
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="logout"
+        app:title="@string/LogOut"
+        app:useSimpleSummaryProvider="true" />
+
+    <Preference
+        app:key="version"
+        app:title="@string/Version"
+        app:summary="1.0"
+        app:useSimpleSummaryProvider="true" />
+
+</PreferenceScreen>
